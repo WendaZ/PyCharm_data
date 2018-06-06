@@ -19,10 +19,14 @@ label = os.listdir(dir_artifact)
 # read image labels
 control = mpimg.imread('PSP_Plate_Artifact_Images/CONTROL_0.tif')
 # read a new plate as the background control
-list = []
-for i in range(len(label)):
-    list.append(np.sum(sam[i].astype('int64') - control.astype('int64')))
 
+list = []
+sam = sam.astype('int64')
+control = control.astype('int64')
+x = sam - control
+for i in range(len(label)):
+    list.append(np.sum(x))
+#sum all the differences to somewhat represent the degree of damage
 
 df = pd.read_excel('Master_sheet.xlsx', sheetname = 'Sheet 1')
 # read the spreadsheet
@@ -44,6 +48,13 @@ for i in ind:
     del list[i]
     del use_time[i]
 # delete the corresponding items in both lists
-
+print(list)
+print(use_time)
 plt.scatter(use_time, list)
 # plot damge degree against time of use
+
+def show(a):
+    f, axarr = plt.subplots(1, 2)
+    axarr[0].imshow(sam[a], cmap='gray')
+    axarr[1].imshow(x[a], cmap='gray')
+# show the subtratced plot together with the original plot
