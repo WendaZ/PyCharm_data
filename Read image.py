@@ -25,7 +25,7 @@ sam = sam.astype('int64')
 control = control.astype('int64')
 x = sam - control
 for i in range(len(label)):
-    list.append(np.sum(x))
+    list.append(np.sum(x[i]))
 #sum all the differences to somewhat represent the degree of damage
 
 df = pd.read_excel('Master_sheet.xlsx', sheetname = 'Sheet 1')
@@ -58,3 +58,10 @@ def show(a):
     axarr[0].imshow(sam[a], cmap='gray')
     axarr[1].imshow(x[a], cmap='gray')
 # show the subtratced plot together with the original plot
+ave = []
+for i in range(sam.shape[0]):
+    ave.append(np.average(sam[i]))
+# calculate the average of the each image
+
+for i in range(sam.shape[0]):
+    sam[i] = sam[i] / ave[i]
