@@ -6,10 +6,13 @@ import pandas as pd
 
 def read_image(dir_name):
     list = []
+    i = 0
     for filename in os.listdir(dir_name):
         realname = dir_name + filename
         list.append(mpimg.imread(realname))
-        a = np.array(list)
+        i += 1
+        print("Read %s images" %i)
+    a = np.array(list).astype("uint8")
     return(a)
 
 dir_artifact = 'PSP_Plate_Artifact_Images/Sample_Artifact_Images/'
