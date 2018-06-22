@@ -6,12 +6,12 @@ import numpy as np
 '''
 Location of artifact images
 '''
-imsource = "C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/PSP_Plate_Artifact_Images/Sample_Artifact_Images/"
+imsource = "C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/Equalized/"
 
 '''
 Location to store filtered images
 '''
-filtered_loc = 'C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/Canny_filtered/'
+filtered_loc = 'C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/Equalized_canny/'
 
 '''
 Display the images? Hit any key to view next one...
@@ -26,7 +26,7 @@ for img_path in os.listdir(imsource):
     print(img_path)
     print(imsource + img_path)
     img = cv2.imread(imsource + img_path)
-    edges = cv2.Canny(img,10,45,apertureSize = 3) ## 10, 45
+    edges = cv2.Canny(img,255,255,apertureSize = 3) ## 10, 45
     filtered.append((img_path, edges))
 
     ## View the image

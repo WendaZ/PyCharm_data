@@ -3,6 +3,7 @@ import matplotlib.image as mpimg
 import numpy as np
 import os
 import cv2
+import skimage
 
 def read_image(dir_name):
     list = []
@@ -12,10 +13,11 @@ def read_image(dir_name):
         list.append(mpimg.imread(realname))
         i += 1
         print("Read %s images" %i)
-    a = np.array(list).astype("uint8")
+    a = np.array(list)
+    a = skimage.img_as_ubyte(a)
     return(a)
 
-dir_artifact = 'PSP_Plate_Artifact_Images/Sample_Artifact_Images/'
+dir_artifact = 'Contrast_limited/'
 sam = read_image(dir_artifact)
 # read sample artifact images
 label = os.listdir(dir_artifact)
@@ -32,12 +34,12 @@ SUM = []
 for i, s in enumerate(sam):
     his = cv2.calcHist([s], [0], None, [256], [0, 256])
     SUM.append(calc_area(b, his))
-    path ="C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/Histogram/" + label[i]
+    path ="C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/CHistogram/" + label[i]
     fig = plt.plot(range(len(his)), his)
     plt.savefig(path)
     a += 1
     plt.gcf().clear()
     print("Saved %s images" %a)
 
-plt.plot(range(len(SUM)), SUM)
-plt.savefig("C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/Histogram/#_of_pixels_over" + str(b))
+# plt.plot(range(len(SUM)), SUM)
+# plt.savefig("C:/Users/MedImage7271/Desktop/PyCharm Projects/Dental plate artifact classification/Histogram/#_of_pixels_over" + str(b))
